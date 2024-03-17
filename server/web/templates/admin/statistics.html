@@ -1,0 +1,58 @@
+{% extends 'admin/base_site.html' %} {% block content %}
+<div class="container">
+	<h1>Statistics</h1>
+
+	<div>
+		<h2>Categories with Number of Courses</h2>
+		<ul>
+			{% for category in stats %}
+			<li>
+				<h5>{{ category.name }}</h5>
+				<span>Amount: {{ category.amount }}</span>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+<div>
+	<canvas id="statsChart"></canvas>
+</div>
+
+{% block JS %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+	window.onload = () => {
+		let labels = [], data = []
+		{% for c in stats %}
+			labels.push("{{ c.name }}")
+			data.push({{ c.amount }})
+		{% endfor %}
+
+		const ctx = document.getElementById('statsChart');
+
+		new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: labels,
+				datasets: [
+					{
+						label: '# of Votes',
+						data: data,
+						borderWidth: 1,
+					},
+				],
+			},
+			options: {
+				scales: {
+					y: {
+						beginAtZero: true,
+					},
+				},
+			},
+		});
+	};
+</script>
+
+{% endblock %} {% endblock %}
