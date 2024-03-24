@@ -17,7 +17,7 @@ class User(AbstractUser):
 class CommonModel(models.Model):
     class Meta:
         abstract = True
-        ordering = ["-created_date", "active"]
+        ordering = ["created_date", "active"]
 
     active = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -26,9 +26,11 @@ class CommonModel(models.Model):
 
 class Category(CommonModel):
     name = models.CharField(max_length=80, unique=True)
+    slug = models.SlugField(null=True)
 
     class Meta:
         verbose_name_plural = 'Categories'
+        ordering = ['-name']
 
     def __str__(self):
         return self.name
@@ -41,3 +43,8 @@ class Course(CommonModel):
 
     def __str__(self):
         return self.title
+
+
+class Lesson(CommonModel):
+    name = models.CharField(max_length=80)
+    

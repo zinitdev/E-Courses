@@ -15,6 +15,7 @@ class CourseAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ["id", "name"]
     inlines = [CourseInline]
+    prepopulated_fields = {"slug": ("name",)}
 
 
 class UserAdmin(admin.ModelAdmin):

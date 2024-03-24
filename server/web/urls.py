@@ -11,6 +11,7 @@ router.register(r'users', views.UserViewSet)
 router.register(r'courses', views.CourseViewSet)
 router.register(r'categories', views.CategoryViewSet)
 
+
 schema_view = get_schema_view(
    openapi.Info(
       title="E-Courses APIs",
